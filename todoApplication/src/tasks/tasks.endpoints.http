@@ -1,0 +1,15 @@
+### Fetch All tasks
+GET http://localhost:3200/tasks
+Content-Type: application/json
+
+### Create a new Task
+POST http://localhost:3200/tasks
+Content-Type: application/json
+
+{
+    "title": "Mololor Sit amet",
+    "date": "2021-01-01T12:00:00Z",
+    "descriptio": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
+    "priority": "LOW",
+    "status": "TO DO"
+}

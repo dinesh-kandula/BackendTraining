@@ -1,0 +1,11 @@
+# Dependency directories
+node_modules/
+
+# TypeScript build output
+/dist/
+
+# .env file containing sensitive information
+.env
+
+# VS Code specific files
+.vscode/
