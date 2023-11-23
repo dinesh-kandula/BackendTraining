@@ -7,9 +7,22 @@ POST http://localhost:3200/tasks
 Content-Type: application/json
 
 {
-    "title": "Mololor Sit amet",
-    "date": "2021-01-01T12:00:00Z",
-    "descriptio": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo",
-    "priority": "LOW",
+    "title": "Heloooo",
+    "date": "2023-11-22T12:11:00Z",
+    "description": "Helloooooooooooooooooo licabo",
+    "priority": "HIGH",
     "status": "TO DO"
 }
+
+### Update Task
+PUT http://localhost:3200/tasks
+Content-Type: application/json
+
+{
+    "id": "f229d842-650c-47f8-9042-e619322c6181",
+    "status": "IN PROGRESS"
+}
+
+### Delete the Task
+DELETE http://localhost:3200/tasks/f229d842-650c-47f8-9042-e619322c6181
+Content-Type: application/json
