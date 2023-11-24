@@ -35,7 +35,6 @@ app.get('/', (req :Request, res : Response) => {
     res.send('Response From Express Server, I fdgxchvjbam listening only for you..');
 });
 
-
 AppDataSource.initialize().then(() =>{
     // Start the application by listening on PORT
     app.listen(port, () => console.log(`Server running on port ${port}`));
