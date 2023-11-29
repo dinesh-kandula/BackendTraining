@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import StudentService from "../services/student.service";
+import { validationResult } from "express-validator";
+
+import studentService from "../services/student.service";
 import { Student } from "../entities/student.entity";
 
 class StudentController {
@@ -7,10 +9,58 @@ class StudentController {
   getStudents = async (req: Request, res: Response): Promise<Response> => {
     let students: Student[];
     try {
-      students = await StudentService.getStudents();
+      students = await studentService.getStudents();
       return res.status(200).json(students);
     } catch (error) {
       return res.json({ error: "Internal Server Error" }).status(500);
+    }
+  };
+
+  addStudent = async (req: Request, res: Response): Promise<Response> => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ erros: result.array() });
+    }
+    const body = req.body;
+    let newStudents: Student;
+
+    try {
+      newStudents = await studentService.createStudent(body);
+      return res.json(newStudents).status(201);
+    } catch (error) {
+      return res.json({ error: error }).status(500);
+    }
+  };
+
+  updateStudent = async (req: Request, res: Response): Promise<Response> => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ erros: result.array() });
+    }
+
+    let updateStudent;
+    try {
+      updateStudent = await studentService.updateStudent(
+        parseInt(req.params.id),
+        req.body.fullName
+      );
+      return res.status(200).json({ updatedStudent: updateStudent });
+    } catch (error) {
+      return res.status(503).json({ error: error });
+    }
+  };
+
+  deleteStudent = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
+    try {
+      const deletedResult = studentService.deleteStudent(
+        parseInt(req.params.id)
+      );
+      return res.status(200).json({ deletedStudent: deletedResult });
+    } catch (error) {
+      return res.status(503).json({ error: error });
     }
   };
 }

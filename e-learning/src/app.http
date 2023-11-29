@@ -10,11 +10,49 @@ Content-Type: application/json
 {
     "fullName" : "Dinesh Kumar",
     "age": 25,
-    "gender": "M"
+    "gender": "M",
+    "email": "dineshkandula007@gmail.com"
 }
+
+### Update Student Name
+PUT http://localhost:3200/student/2
+Content-Type: application/json
+
+{
+    "fullName" : "James"
+}
+
+### Delete exisiting Student
+DELETE http://localhost:3200/student/3
+Content-Type: application/json
+
 
 
 #------------------ Instructor -----------------
 ### Get list of Instructors
 GET http://localhost:3200/instructor
+Content-Type: application/json
+
+
+### Add new instructor
+POST http://localhost:3200/instructor
+Content-Type: application/json
+
+{
+    "fullName" : "Sri Lakshmi",
+    "email": "sri.143@techvedika.com",
+    "gender": "F"
+}
+
+###  Update Exsisting instructor name
+PUT http://localhost:3200/instructor/6
+Content-Type: application/json
+
+{
+    "fullName" : "Sri Laxmi"
+}
+
+
+### Delete exisiting Instructor
+DELETE http://localhost:3200/instructor/6
 Content-Type: application/json
