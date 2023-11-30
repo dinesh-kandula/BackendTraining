@@ -45,7 +45,9 @@ class InstructorController {
     }
   };
 
-  deleteInstructor = async (req: Request, res: Response) => {};
+  deleteInstructor = async (req: Request, res: Response) => {
+    console.log("Nothing Written to execute...");
+  };
 }
 
 export default new InstructorController();
