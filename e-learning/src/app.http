@@ -1,6 +1,6 @@
 #------------------ Student -----------------
 ### Get list of Students
-GET http://localhost:3200/student
+GET http://localhost:3200/student/
 Content-Type: application/json
 
 ### Add new student
@@ -8,10 +8,10 @@ POST http://localhost:3200/student
 Content-Type: application/json
 
 {
-    "fullName" : "Dinesh Kumar",
-    "age": 25,
+    "fullName" : "Gemini Ganesh",
+    "age": 32,
     "gender": "M",
-    "email": "dineshkandula007@gmail.com"
+    "email": "ganeshGemini@gmail.com"
 }
 
 ### Update Student Name
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ### Delete exisiting Student
-DELETE http://localhost:3200/student/3
+DELETE http://localhost:3200/student/1
 Content-Type: application/json
 
 
@@ -39,20 +39,20 @@ POST http://localhost:3200/instructor
 Content-Type: application/json
 
 {
-    "fullName" : "Sri Lakshmi",
-    "email": "sri.143@techvedika.com",
-    "gender": "F"
+    "fullName" : "Subramanyam",
+    "email": "subramanyam@techvedika.com",
+    "gender": "M"
 }
 
 ###  Update Exsisting instructor name
-PUT http://localhost:3200/instructor/6
+PUT http://localhost:3200/instructor/5
 Content-Type: application/json
 
 {
-    "fullName" : "Sri Laxmi"
+    "fullName" : "Subrmanayam Ayer"
 }
 
 
 ### Delete exisiting Instructor
-DELETE http://localhost:3200/instructor/6
+DELETE http://localhost:3200/instructor/1
 Content-Type: application/json

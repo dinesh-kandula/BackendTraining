@@ -10,6 +10,8 @@ import {
 const route: Router = Router();
 
 const studentRoute = () => {
+  route.get("/:id", studentController.getStudentById);
+
   route.get("", studentController.getStudents);
 
   route.post(
@@ -26,7 +28,11 @@ const studentRoute = () => {
     studentController.updateStudent
   );
 
-  route.delete("/:id", verifyStudentExistsMiddleware, studentController.deleteStudent);
+  route.delete(
+    "/:id",
+    verifyStudentExistsMiddleware,
+    studentController.deleteStudent
+  );
 
   return route;
 };

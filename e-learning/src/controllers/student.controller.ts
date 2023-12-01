@@ -3,8 +3,19 @@ import { validationResult } from "express-validator";
 
 import studentService from "../services/student.service";
 import { Student } from "../entities/student.entity";
+import { UpdateResult } from "typeorm";
 
 class StudentController {
+  getStudentById = async (req: Request, res: Response) => {
+    let student: Student;
+    try {
+      student = await studentService.getCurrentStudent(parseInt(req.params.id));
+      return res.status(200).json(student);
+    } catch (error) {
+      return res.json({ error: `Internal Server Error ${error}` }).status(500);
+    }
+  };
+
   // Get the list of all the students
   getStudents = async (req: Request, res: Response): Promise<Response> => {
     let students: Student[];
@@ -38,7 +49,7 @@ class StudentController {
       return res.status(400).json({ erros: result.array() });
     }
 
-    let updateStudent;
+    let updateStudent: UpdateResult;
     try {
       updateStudent = await studentService.updateStudent(
         parseInt(req.params.id),
@@ -50,15 +61,11 @@ class StudentController {
     }
   };
 
-  deleteStudent = async (
-    req: Request,
-    res: Response
-  ): Promise<Response | void> => {
+  deleteStudent = async (req: Request, res: Response): Promise<Response> => {
+    let deleteResult;
     try {
-      const deletedResult = studentService.deleteStudent(
-        parseInt(req.params.id)
-      );
-      return res.status(200).json({ deletedStudent: deletedResult });
+      deleteResult = studentService.deleteStudent(parseInt(req.params.id));
+      return res.status(200).json(deleteResult);
     } catch (error) {
       return res.status(503).json({ error: error });
     }

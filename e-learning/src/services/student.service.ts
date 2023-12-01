@@ -90,11 +90,14 @@ class StudentSerivce {
     }
   };
 
-  deleteStudent = async (id: number): Promise<DeleteResult> => {
+  deleteStudent = async (id: number) => {
     try {
       const studentRepository = AppDataSource.getRepository(Student);
       const studentEntity = await this.getCurrentStudent(id);
-      const deletedStudent = await studentRepository.delete(studentEntity);
+
+      const deletedStudent: DeleteResult = await studentRepository.delete(
+        studentEntity
+      );
       return deletedStudent;
     } catch (error) {
       console.error(`Error Deleting student with id ${id}:`, error);

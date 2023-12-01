@@ -2,7 +2,7 @@ import { Request } from "express";
 
 import { AppDataSource } from "../data-source";
 import { Instructor } from "../entities/instructor.entity";
-import { UpdateResult } from "typeorm";
+import { UpdateResult, DeleteResult } from "typeorm";
 import { Gender } from "../enums/gender";
 
 class InstructorService {
@@ -78,11 +78,13 @@ class InstructorService {
     }
   };
 
-  deleteInstructo = async (id: number) => {
+  deleteInstructor = async (id: number) => {
     try {
       const instructorRepository = AppDataSource.getRepository(Instructor);
       const instructorEntity = await this.getCurrentInstructor(id);
-      const deletedResult = await instructorRepository.delete(instructorEntity);
+      const deletedResult: DeleteResult = await instructorRepository.delete(
+        instructorEntity
+      );
       return deletedResult;
     } catch (error) {
       console.error(`Error Deleting Instructor with id ${id}:`, error);

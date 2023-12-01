@@ -7,10 +7,14 @@ const PORT = process.env.PORT;
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Data Source initialized");
+    console.log(
+      " ------------------------------- Data Source initialized ------------------------------"
+    );
 
     app.listen(PORT, () => {
-      console.log(`Listening at http://localhost:${PORT}`);
+      console.log(
+        `-------------------------- Listening at http://localhost:${PORT} --------------------------`
+      );
     });
   })
   .catch((err) => {

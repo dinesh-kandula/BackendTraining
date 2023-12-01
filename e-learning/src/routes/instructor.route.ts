@@ -9,6 +9,8 @@ import {
 const route: Router = Router();
 
 const instructorRoute = () => {
+  route.get("/:id", instructorController.getInstructorById);
+
   route.get("", instructorController.getInstructor);
 
   route.post(
@@ -25,7 +27,11 @@ const instructorRoute = () => {
     instructorController.updateInstructor
   );
 
-  route.delete("",verifyInstructorExistsMiddleware, instructorController.deleteInstructor);
+  route.delete(
+    "/:id",
+    verifyInstructorExistsMiddleware,
+    instructorController.deleteInstructor
+  );
 
   return route;
 };
