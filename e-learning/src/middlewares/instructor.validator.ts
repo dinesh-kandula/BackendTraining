@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { Instructor } from "../entities/instructor.entity";
 
-export const verifyInstructorExistsMiddleware = async (
+export const verifyInstructorExistsMiddlewareWithParamId = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,6 +17,26 @@ export const verifyInstructorExistsMiddleware = async (
     return res.status(404).json({
       error: `Instructor not found with Instructor Id : ${req.params.id}`,
     });
+  }
+  return next();
+};
+
+export const verifyInstructorExistsMiddlewareWithBodyId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> => {
+  const instructorRepository = AppDataSource.getRepository(Instructor);
+  if (req.body.instructorId) {
+    const instructorExists = await instructorRepository.findOneBy({
+      id: parseInt(req.body.instructorId),
+    });
+
+    if (!instructorExists) {
+      return res.status(404).json({
+        error: `Instructor not found with Instructor Id : ${req.params.id}`,
+      });
+    }
   }
   return next();
 };

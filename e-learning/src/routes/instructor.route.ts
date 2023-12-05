@@ -3,7 +3,7 @@ import instructorController from "../controllers/instructor.controller";
 import { createSchema, updateSchema } from "../schemas/instructor.schema";
 import {
   verifyInstructorEmailExistsMiddleware,
-  verifyInstructorExistsMiddleware,
+  verifyInstructorExistsMiddlewareWithParamId,
 } from "../middlewares/instructor.validator";
 
 const route: Router = Router();
@@ -23,13 +23,13 @@ const instructorRoute = () => {
   route.put(
     "/:id",
     updateSchema,
-    verifyInstructorExistsMiddleware,
+    verifyInstructorExistsMiddlewareWithParamId,
     instructorController.updateInstructor
   );
 
   route.delete(
     "/:id",
-    verifyInstructorExistsMiddleware,
+    verifyInstructorExistsMiddlewareWithParamId,
     instructorController.deleteInstructor
   );
 

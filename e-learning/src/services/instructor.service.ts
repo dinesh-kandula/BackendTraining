@@ -11,13 +11,13 @@ class InstructorService {
       const instructorRepository = AppDataSource.getRepository(Instructor);
       const instructor = await instructorRepository.findOneBy({ id: id });
       if (instructor === null) {
-        console.log("No Id found with given Instructor Id");
-        throw "No Id found with given Instructor Id";
+        console.log("No instructor found with given Instructor Id");
+        throw "No instructor found with given Instructor Id";
       } else {
         return instructor;
       }
     } catch (error) {
-      console.error(`Error Getting Current student with id ${id}:`, error);
+      console.error(`Error Getting Current instructor with id ${id}:`, error);
       throw error;
     }
   };

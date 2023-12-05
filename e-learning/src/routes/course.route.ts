@@ -1,12 +1,24 @@
 import { Router } from "express";
 import courseController from "../controllers/course.controller";
-// import { createSchema, updateSchema } from "../schemas/instructor.schema";
+import { addCourseSchema } from "../schemas/course.schema";
+import { verifyInstructorExistsMiddlewareWithBodyId } from "../middlewares/instructor.validator";
 
 const route: Router = Router();
 
 const courseRoute = () => {
-  route.get("/:id", courseController.getCourse);
+  // Get Course by Id
+  route.get("/:id", courseController.getCourseById);
+
+  // Get list of all courses
   route.get("", courseController.getAllCourses);
+
+  // Add Course
+  route.post(
+    "",
+    addCourseSchema,
+    verifyInstructorExistsMiddlewareWithBodyId,
+    courseController.addCourse
+  );
   return route;
 };
 
