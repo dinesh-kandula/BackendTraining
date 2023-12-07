@@ -26,11 +26,17 @@ export class Student {
   @Column({ type: "varchar", length: 300, nullable: false, unique: true })
   email: string;
 
+  @Column({ type: "text", nullable: false })
+  passsword: string;
+
   @Column({ type: "int", nullable: false })
   age: number;
 
   @Column({ type: "enum", enum: Gender })
   gender: Gender;
+
+  @Column({ type: "text", nullable: false })
+  salt: string;
 
   @ManyToMany(() => Course, (course) => course.students)
   courses: Course[];

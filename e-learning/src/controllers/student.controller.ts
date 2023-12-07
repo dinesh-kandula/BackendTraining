@@ -4,12 +4,45 @@ import { validationResult } from "express-validator";
 import studentService from "../services/student.service";
 import { Student } from "../entities/student.entity";
 import { UpdateResult } from "typeorm";
+import { ExtendedRequest } from "../enums/email-payload";
 
 class StudentController {
-  getStudentById = async (req: Request, res: Response) => {
+  addStudent = async (req: Request, res: Response): Promise<Response> => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ erros: result.array() });
+    }
+    let newStudents: {};
+
+    try {
+      newStudents = await studentService.createStudent(req);
+      return res.json(newStudents).status(201);
+    } catch (error) {
+      return res.json({ error: "Internal Server Error" }).status(500);
+    }
+  };
+
+  loginStudent = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const loginResult: {
+        message: string;
+        result: boolean;
+      } = await studentService.loginStudent(req);
+
+      if (loginResult.result) {
+        return res.status(200).json(loginResult);
+      } else {
+        return res.status(401).json(loginResult);
+      }
+    } catch (error) {
+      return res.json({ error: "Internal Server Error" }).status(500);
+    }
+  };
+
+  getCurrentStudent = async (req: ExtendedRequest, res: Response) => {
     let student: Student;
     try {
-      student = await studentService.getCurrentStudent(parseInt(req.params.id));
+      student = await studentService.getCurrentStudentByEmail(req);
       return res.status(200).json(student);
     } catch (error) {
       return res.json({ error: `Internal Server Error ${error}` }).status(500);
@@ -27,22 +60,6 @@ class StudentController {
     }
   };
 
-  addStudent = async (req: Request, res: Response): Promise<Response> => {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-      return res.status(400).json({ erros: result.array() });
-    }
-    const body = req.body;
-    let newStudents: Student;
-
-    try {
-      newStudents = await studentService.createStudent(body);
-      return res.json(newStudents).status(201);
-    } catch (error) {
-      return res.json({ error: error }).status(500);
-    }
-  };
-
   updateStudent = async (req: Request, res: Response): Promise<Response> => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
@@ -57,7 +74,7 @@ class StudentController {
       );
       return res.status(200).json({ updatedStudent: updateStudent });
     } catch (error) {
-      return res.status(503).json({ error: error });
+      return res.json({ error: "Internal Server Error" }).status(500);
     }
   };
 
@@ -67,7 +84,7 @@ class StudentController {
       deleteResult = studentService.deleteStudent(parseInt(req.params.id));
       return res.status(200).json(deleteResult);
     } catch (error) {
-      return res.status(503).json({ error: error });
+      return res.json({ error: "Internal Server Error" }).status(500);
     }
   };
 }

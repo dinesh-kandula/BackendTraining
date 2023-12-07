@@ -2,16 +2,28 @@
 ### Get list of Students
 GET http://localhost:3200/student/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpbmVzaGthbmR1bGEwMDdAZ21haWwuY29tIiwiaWF0IjoxNzAxODcyOTYyfQ.YXOKBhIPyxGQjYNDtNdGWvvrKy8wwGj2Us5u3nHcx4o
+
+### Login 
+POST http://localhost:3200/student/login
+Content-Type: application/json
+
+{
+    "email": "dineshkandula007@gmail.com",
+    "password": "Bunnny1997@"
+}
+
 
 ### Add new student
-POST http://localhost:3200/student
+POST http://localhost:3200/student/register
 Content-Type: application/json
 
 {
     "fullName" : "Gemini Ganesh",
     "age": 32,
     "gender": "M",
-    "email": "ganeshGemini@gmail.com"
+    "email": "ganeshGemini@gmail.com",
+    "password": "Ganesh@123"
 }
 
 ### Update Student Name

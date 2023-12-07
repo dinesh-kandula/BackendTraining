@@ -3,6 +3,7 @@ import { Express } from "express";
 import studentRoute from "./student.route";
 import instructorRoute from "./instructor.route";
 import courseRoute from "./course.route";
+import adminRoute from "./admin.route";
 
 import courseInstructorController from "../controllers/course-instructor.controller";
 
@@ -12,6 +13,7 @@ const registerRoutes = (app: Express) => {
   app.use("/student", studentRoute());
   app.use("/instructor", instructorRoute());
   app.use("/course", courseRoute());
+  app.use("/admin", adminRoute());
 
   // Fetch all the courses that are being taught by “instructorId”.
   app.get(

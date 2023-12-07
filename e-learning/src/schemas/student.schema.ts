@@ -1,7 +1,7 @@
 import { body, ValidationChain, param } from "express-validator";
 import { Gender } from "../enums/gender";
 
-export const createSchema: ValidationChain[] = [
+export const registerStudentSchema: ValidationChain[] = [
   body("fullName")
     .notEmpty()
     .isString()
@@ -34,9 +34,34 @@ export const createSchema: ValidationChain[] = [
     .notEmpty()
     .isEmail()
     .withMessage("Please Enter a valid Email id"),
+
+  /*
+    body("password")
+    .notEmpty()
+    .withMessage("Password should not be Empty")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters")
+    .custom((value) => /[A-Z]/.test(value))
+    .withMessage("Password must contain at least one uppercase letter")
+    .custom((value) => /[a-z]/.test(value))
+    .withMessage("Password must contain at least one lowercase letter")
+    .custom((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value))
+    .withMessage("Password must contain at least one special character"),
+    */
+  body("password")
+    .notEmpty()
+    .withMessage("Password should not be empty!")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters")
+    .matches(/[A-Z]/)
+    .withMessage("Password must contain at least one uppercase letter")
+    .matches(/[a-z]/)
+    .withMessage("Password must contain at least one lowercase letter")
+    .matches(/[@#$%&*.]/)
+    .withMessage("Password must contain at least one special character"),
 ];
 
-export const updateSchema: ValidationChain[] = [
+export const updateStudentSchema: ValidationChain[] = [
   param("id")
     .notEmpty()
     .isNumeric()

@@ -1,38 +1,60 @@
 import { Router } from "express";
 
 import studentController from "../controllers/student.controller";
-import { createSchema, updateSchema } from "../schemas/student.schema";
+import { registerStudentSchema } from "../schemas/student.schema";
 import {
+  verifyStudentEmailNotExistsMiddleware,
   verifyStudentEmailExistsMiddleware,
-  verifyStudentExistsMiddleware,
 } from "../middlewares/student.validator";
+
+import { verifyTokenMiddleware } from "../middlewares/verifyToken.middleware";
+import { verifyAdminEmailExistsMiddlewareAfterToken } from "../middlewares/admin.validator";
 
 const route: Router = Router();
 
 const studentRoute = () => {
-  route.get("/:id", studentController.getStudentById);
-
-  route.get("", studentController.getStudents);
-
+  // Register Student
   route.post(
-    "",
-    createSchema,
-    verifyStudentEmailExistsMiddleware,
+    "/register",
+    registerStudentSchema,
+    verifyStudentEmailNotExistsMiddleware,
     studentController.addStudent
   );
 
-  route.put(
-    "/:id",
-    updateSchema,
-    verifyStudentExistsMiddleware,
-    studentController.updateStudent
+  // Login Student
+  route.post(
+    "/login",
+    verifyStudentEmailExistsMiddleware,
+    studentController.loginStudent
   );
 
-  route.delete(
-    "/:id",
-    verifyStudentExistsMiddleware,
-    studentController.deleteStudent
+  // After Logging the respective student details will be displayed
+  route.get(
+    "/current",
+    verifyTokenMiddleware,
+    studentController.getCurrentStudent
   );
+
+  // Get the list of all the students [This is only accessable by Admins only.] 
+  route.get(
+    "/all",
+    verifyTokenMiddleware,
+    verifyAdminEmailExistsMiddlewareAfterToken,
+    studentController.getStudents
+  );
+
+  // route.put(
+  //   "/:id",
+  //   updateStudentSchema,
+  //   verifyStudentExistsMiddlewareWithIdInParams,
+  //   studentController.updateStudent
+  // );
+
+  // route.delete(
+  //   "/:id",
+  //   verifyStudentExistsMiddlewareWithIdInParams,
+  //   studentController.deleteStudent
+  // );
 
   return route;
 };
